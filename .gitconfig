@@ -1,0 +1,12 @@
+[filter "lfs"]
+    clean = git-lfs clean %f
+    smudge = git-lfs smudge %f
+    required = true
+[user]
+    name = drafteee
+    [user]
+    password = cthutq19962015
+[user]
+    email = sergej_-96@mail.ru
+[credential]
+    helper = wincred
