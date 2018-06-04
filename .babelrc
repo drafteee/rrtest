@@ -1,3 +1,16 @@
 {
-  "presets": ["env", "react","stage-0"]
+  "passPerPreset": true,
+  "presets": [
+  "env", "react","es2015","stage-0","react-hmre"],
+  "env": {
+    "development": {
+      "plugins": [["react-transform", {
+        "transforms": [{
+          "transform": "react-transform-hmr",
+          "imports": ["react"],
+          "locals": ["module"]
+        }]
+      }]]
+    }
+  }
 }
