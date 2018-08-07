@@ -21,7 +21,7 @@ Comment.propTypes = {
     }).isRequired
 }
 
-const mapStateToProps = () => {
+const mapStateToProps = () => { //функция которая возвращает на каждый объект коммента свой commentselector
     const commentSelector = commentSelectorFactory()
 
     return (state, ownProps)=>{

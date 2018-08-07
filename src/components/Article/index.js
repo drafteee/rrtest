@@ -6,7 +6,7 @@ import './style.css'
 import {connect} from 'react-redux'
 import {deleteArticle} from '../../ActionCreators'
 
-class Article extends PureComponent{
+class Article extends PureComponent{// toggleOpen новая функция создается и из-за этого PureComponent не работает
 
     static propTypes ={
         article:PropTypes.shape({
@@ -22,7 +22,8 @@ class Article extends PureComponent{
         updateIndex:0
     }
 
-    // shouldComponentUpdate(nextProps,nextState){
+    // shouldComponentUpdate(nextProps,nextState){ //нужно для того,чтобы указать, что обновлять, а что нет
+    //испольлзуем тогда,когда приложение плохо работает и когда нужна РЕАЛЬНАЯ оптимизация
     //     return nextProps.isOpen !== this.props.isOpen
     // }
 
