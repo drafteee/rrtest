@@ -4,9 +4,10 @@ import CommentList from '../CommentList'
 import ReactCSSTransitionGroup  from 'react-addons-css-transition-group'
 import './style.css'
 import {connect} from 'react-redux'
-import {deleteArticle} from '../../ActionCreators'
+import {deleteArticle, loadArticle} from '../../ActionCreators'
+import Loader from '../Loader'
 
-class Article extends PureComponent{// toggleOpen новая функция создается и из-за этого PureComponent не работает
+class Article extends PureComponent{// toggleOpen новая функция создается и из-за этого PureComponent не работает(3 урок)
 
     static propTypes ={
         article:PropTypes.shape({
@@ -22,6 +23,10 @@ class Article extends PureComponent{// toggleOpen новая функция со
         updateIndex:0
     }
 
+    componentWillReceiveProps({isOpen, loadArticle, article}){
+        console.log(article.id)
+        if(isOpen && !article.text && !article.loading) loadArticle(article.id)
+    }
     // shouldComponentUpdate(nextProps,nextState){ //нужно для того,чтобы указать, что обновлять, а что нет
     //испольлзуем тогда,когда приложение плохо работает и когда нужна РЕАЛЬНАЯ оптимизация
     //     return nextProps.isOpen !== this.props.isOpen
@@ -29,7 +34,7 @@ class Article extends PureComponent{// toggleOpen новая функция со
 
     render(){
         const {article, foo, isOpen, toggleOpen} = this.props
-        console.log('update article');
+        //console.log('update article');
         
         return(    
                 <div ref = {this.setContainerRef}>
@@ -45,7 +50,7 @@ class Article extends PureComponent{// toggleOpen новая функция со
 
     setContainerRef = ref =>{
         this.container = ref
-        console.log(ref);
+        //console.log(ref);
     } 
 
     handleDelete = () =>{
@@ -57,15 +62,14 @@ class Article extends PureComponent{// toggleOpen новая функция со
 
     getBody(){
         const {article, foo,isOpen} = this.props
-        
         if(!isOpen) return null
-        
-        
+        console.log(article)
+        if(article.loading) return <Loader/>
         return(
             <section>
                 {article.text}
                 <button onClick={()=>this.setState({updateIndex: this.state.updateIndex + 1})}>update</button>
-                <CommentList comments={article.comments} ref={this.setCommentsRef} key={this.state.updateIndex}/>
+                <CommentList article={article} ref={this.setCommentsRef} key={this.state.updateIndex}/>
             </section>
         ) 
     }
@@ -76,4 +80,4 @@ class Article extends PureComponent{// toggleOpen новая функция со
     }
 }
 
-export default connect(null,{deleteArticle})(Article)
+export default connect(null,{deleteArticle, loadArticle})(Article)

@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import './style.css'
+import {connect} from 'react-redux'
+import {addComment} from '../../ActionCreators'
 class CommentForm extends Component {
 
     state = {
@@ -19,6 +21,8 @@ class CommentForm extends Component {
 
     handleSubmit = ev => {
         ev.preventDefault()
+        console.log(this.state)
+        this.props.addComment(this.state)
         this.setState({
             user:'',
             text:''
@@ -32,7 +36,11 @@ class CommentForm extends Component {
 
         if(value.length > limits[type].max) return
 
-        this.setState({[type]:value});
+        this.setState(
+            {
+                [type]:value
+            }
+        );
     }
 
     
@@ -48,4 +56,6 @@ const limits = {
         max:50
     }
 }
-export default CommentForm;
+export default connect(null,(dispatch,ownProps) => ({
+    addComment:(comment)=>dispatch(addComment(comment,ownProps.articleId))
+}))(CommentForm)
